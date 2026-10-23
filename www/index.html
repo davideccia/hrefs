@@ -77,6 +77,19 @@
         width: 0.6ch;
         height: 1.1em;
         background: var(--accent);
+        animation: blink 1s steps(1) infinite;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        h1::after {
+          animation: none;
+        }
       }
 
       .groups {
