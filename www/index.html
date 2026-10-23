@@ -288,6 +288,8 @@
       function createRow({ name, url, icon }) {
         const row = el("a", "row");
         row.href = url;
+        row.target = "_blank";
+        row.rel = "noopener noreferrer";
 
         const iconWrap = el("span", "icon");
         const monogram = () =>

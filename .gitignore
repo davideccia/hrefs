@@ -1,3 +1,4 @@
 .env
 
 services.js
+custom_favicon.*

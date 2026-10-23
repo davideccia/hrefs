@@ -1,7 +1,7 @@
 // Copy this file to services.js and edit it to change the services shown in index.html.
 // Each section: { title, services: [{ name, url, icon? }] }. Reload the page after saving.
 // Optional: custom favicon (URL or path). If omitted or unreachable, the default one is used.
-// window.FAVICON = "./my-favicon.png";
+// window.FAVICON = "./custom_favicon.png";
 
 window.SERVICES = [
   {

@@ -67,10 +67,10 @@ Reload the page after each change to `services.js`.
 | `url`  | yes      | Full URL of the service (the displayed host is derived from it)      |
 | `icon` | no       | URL of a square image (24x24 px). If missing, the name's initial is shown |
 
-To use your own favicon, set `window.FAVICON` in `services.js` to a URL or a path relative to `index.html` (for example a file placed in `www/`). If it is missing or fails to load, the bundled `favicon.svg` is used.
+To use your own favicon, set `window.FAVICON` in `services.js` to a URL or a path relative to `index.html` (for example `custom_favicon.png` placed in `www/`, which is git-ignored (any `custom_favicon.*` is)). If it is missing or fails to load, the bundled `favicon.svg` is used.
 
 ```js
-window.FAVICON = "./my-favicon.png";
+window.FAVICON = "./custom_favicon.png";
 ```
 
 A flat array of services, without sections, still works and is rendered without a header.
