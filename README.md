@@ -2,9 +2,9 @@
 
 <img src="./favicon.svg" alt="" width="96" height="96">
 
-# docker@local
+# hrefs
 
-A static start page for the Docker services running on your machine.
+A static start page for the services running on your machine (Docker or not): a list of links, grouped in sections.
 No build, no dependencies: one `index.html` and one JS config file.
 
 [Features](#features) · [Usage](#usage) · [Configuration](#configuration) · [Docker](#serve-it-with-docker)
