@@ -1,0 +1,14 @@
+// Copy this file to services.js and edit it to change the services shown in index.html.
+// Each section: { title, services: [{ name, url, icon? }] }. Reload the page after saving.
+window.SERVICES = [
+  {
+    title: "Example",
+    services: [
+      {
+        name: "Example",
+        url: "http://localhost:8080",
+        icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/docker.webp",
+      },
+    ],
+  },
+];

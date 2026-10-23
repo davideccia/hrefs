@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <title>hrefs</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <style>
+      /* Terminal / dark-tech language: monospace only, square corners, one green accent. */
+      :root {
+        --bg: #0b0e0c;
+        --surface: #111512;
+        --border: #232a25;
+        --text: #d7e0d9;
+        --text-muted: #7f8c83;
+        --accent: #4ade80;
+        --on-accent: #07120b;
+        --font:
+          ui-monospace, "SF Mono", "JetBrains Mono", "Geist Mono", Menlo,
+          Consolas, monospace;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f3f5f2;
+          --surface: #ffffff;
+          --border: #cfd6d1;
+          --text: #18201b;
+          --text-muted: #55625a;
+          --accent: #15803d;
+          --on-accent: #ffffff;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        font-size: 15px;
+        min-height: 100dvh;
+        padding: clamp(1.5rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
+      }
+
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75ch;
+        font-size: clamp(1.4rem, 3.4vw, 2rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 2rem;
+      }
+
+      h1::before {
+        content: "$";
+        color: var(--accent);
+      }
+
+      h1::after {
+        content: "";
+        align-self: center;
+        width: 0.6ch;
+        height: 1.1em;
+        background: var(--accent);
+      }
+
+      .groups {
+        display: grid;
+        gap: 2.5rem;
+      }
+
+      .group-title {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75ch;
+        margin-bottom: 0.75rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .group-title::before {
+        content: "#";
+        color: var(--accent);
+      }
+
+      .list {
+        display: grid;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1rem 1.25rem;
+        color: inherit;
+        text-decoration: none;
+        transition:
+          background 0.2s var(--ease),
+          color 0.2s var(--ease);
+      }
+
+      .row + .row {
+        border-top: 1px solid var(--border);
+      }
+
+      .row:hover,
+      .row:focus-visible {
+        background: var(--accent);
+        color: var(--on-accent);
+        outline: none;
+      }
+
+      .row:active {
+        transform: translateY(1px);
+      }
+
+      .icon {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+      }
+
+      .icon img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+
+      .icon-letter {
+        color: var(--accent);
+        font-size: 1.1rem;
+        font-weight: 600;
+        line-height: 1;
+        transition: color 0.2s var(--ease);
+      }
+
+      .row:hover .icon-letter,
+      .row:focus-visible .icon-letter {
+        color: var(--text);
+      }
+
+      .name {
+        font-size: 1.05rem;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .host {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        transition: color 0.2s var(--ease);
+      }
+
+      .row:hover .host,
+      .row:focus-visible .host {
+        color: inherit;
+      }
+
+      .arrow {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.25s var(--ease);
+      }
+
+      .row:hover .arrow,
+      .row:focus-visible .arrow {
+        transform: translateX(4px);
+      }
+
+      .state {
+        display: grid;
+        gap: 0.75rem;
+        padding: 1.5rem 1.25rem;
+      }
+
+      .state-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .state-title::before {
+        content: "> ";
+        color: var(--accent);
+      }
+
+      .state-hint {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        line-height: 1.6;
+        max-width: 65ch;
+      }
+
+      .state-code {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        font-family: inherit;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        white-space: pre;
+      }
+
+      @media (max-width: 480px) {
+        .row {
+          grid-template-columns: auto 1fr auto;
+        }
+        .host {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .row,
+        .host,
+        .arrow {
+          transition: none;
+        }
+        .row:hover .arrow,
+        .row:focus-visible .arrow,
+        .row:active {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>hrefs</h1>
+
+      <div class="groups" id="services"></div>
+    </main>
+
+    <script src="./services.js"></script>
+    <script>
+      const services = Array.isArray(window.SERVICES) ? window.SERVICES : null;
+
+      // Tabler "arrow-right" outline
+      const ARROW = `<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
+
+      function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text) node.textContent = text;
+        return node;
+      }
+
+      function createRow({ name, url, icon }) {
+        const row = el("a", "row");
+        row.href = url;
+
+        const iconWrap = el("span", "icon");
+        const monogram = () =>
+          el("span", "icon-letter", name.trim().charAt(0).toUpperCase() || "?");
+        if (icon) {
+          const img = el("img");
+          img.src = icon;
+          img.alt = "";
+          // Missing or unreachable icon: show the name's initial.
+          img.addEventListener("error", () => img.replaceWith(monogram()), {
+            once: true,
+          });
+          iconWrap.append(img);
+        } else {
+          iconWrap.append(monogram());
+        }
+
+        row.append(
+          iconWrap,
+          el("span", "name", name),
+          el("span", "host", new URL(url).host),
+        );
+        row.insertAdjacentHTML("beforeend", ARROW);
+        return row;
+      }
+
+      // Accepts both sections { title, services: [...] } and the flat services format.
+      function toSections(items) {
+        if (items.every((item) => Array.isArray(item.services))) return items;
+        return [{ services: items }];
+      }
+
+      function createSection({ title, services }) {
+        const group = el("section", "group");
+        const list = el("nav", "list");
+        if (title) {
+          const heading = el("h2", "group-title", title);
+          heading.id = `group-${title.toLowerCase().replace(/\W+/g, "-")}`;
+          group.append(heading);
+          list.setAttribute("aria-labelledby", heading.id);
+        } else {
+          list.setAttribute("aria-label", "Local services");
+        }
+        list.append(...services.map(createRow));
+        group.append(list);
+        return group;
+      }
+
+      function createState(title, hint, code) {
+        const state = el("div", "state");
+        state.setAttribute("role", "status");
+        state.append(
+          el("p", "state-title", title),
+          el("p", "state-hint", hint),
+        );
+        if (code) state.append(el("pre", "state-code", code));
+        return state;
+      }
+
+      const EXAMPLE_ENTRY = `{
+  title: "Section",
+  services: [
+    {
+      name: "Name",
+      url: "http://localhost:8080",
+      icon: "https://.../icon.webp",
+    },
+  ],
+}`;
+
+      const root = document.getElementById("services");
+      const sections = services ? toSections(services) : [];
+      const total = sections.reduce((n, s) => n + s.services.length, 0);
+      if (!services) {
+        root.append(
+          createState(
+            "services.js not found or invalid",
+            "Make sure the file exists next to index.html and defines window.SERVICES as an array.",
+          ),
+        );
+      } else if (total === 0) {
+        root.append(
+          createState(
+            "No services configured",
+            "Add a section to the window.SERVICES array in services.js (you can start from services.js.example) and reload the page.",
+            EXAMPLE_ENTRY,
+          ),
+        );
+      } else {
+        root.append(...sections.map(createSection));
+      }
+    </script>
+  </body>
+</html>
