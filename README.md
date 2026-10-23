@@ -14,6 +14,7 @@ No build, no dependencies: one `index.html` and one JS config file.
 ## Features
 
 - Services grouped into sections, each with a header and rows showing icon, name and host
+- Customizable favicon, with the bundled one as fallback
 - Single config file (`services.js`), no need to touch the HTML
 - Falls back to the first letter of the name when an icon is missing or fails to load
 - Empty state with instructions when the list is empty, and a dedicated message if `services.js` is missing or invalid
@@ -65,6 +66,12 @@ Reload the page after each change to `services.js`.
 | `name` | yes      | Name shown in the row                                                |
 | `url`  | yes      | Full URL of the service (the displayed host is derived from it)      |
 | `icon` | no       | URL of a square image (24x24 px). If missing, the name's initial is shown |
+
+To use your own favicon, set `window.FAVICON` in `services.js` to a URL or a path relative to `index.html` (for example a file placed in `www/`). If it is missing or fails to load, the bundled `favicon.svg` is used.
+
+```js
+window.FAVICON = "./my-favicon.png";
+```
 
 A flat array of services, without sections, still works and is rendered without a header.
 

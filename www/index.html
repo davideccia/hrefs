@@ -260,6 +260,21 @@
     <script>
       const services = Array.isArray(window.SERVICES) ? window.SERVICES : null;
 
+      // Optional custom favicon (window.FAVICON); the bundled one is the fallback.
+      const DEFAULT_FAVICON = "./favicon.svg";
+      if (typeof window.FAVICON === "string" && window.FAVICON.trim()) {
+        const link = document.querySelector('link[rel="icon"]');
+        const probe = new Image();
+        probe.onload = () => {
+          link.removeAttribute("type");
+          link.href = probe.src;
+        };
+        probe.onerror = () => {
+          link.href = DEFAULT_FAVICON;
+        };
+        probe.src = window.FAVICON.trim();
+      }
+
       // Tabler "arrow-right" outline
       const ARROW = `<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
 
