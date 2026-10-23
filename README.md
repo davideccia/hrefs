@@ -1,13 +1,13 @@
 <div align="center">
 
-<img src="./favicon.svg" alt="" width="96" height="96">
+<img src="./www/favicon.svg" alt="" width="96" height="96">
 
 # hrefs
 
 A static start page for the services running on your machine (Docker or not): a list of links, grouped in sections.
 No build, no dependencies: one `index.html` and one JS config file.
 
-[Features](#features) · [Usage](#usage) · [Configuration](#configuration) · [Docker](#serve-it-with-docker)
+[Features](#features) · [Usage](#usage) · [Configuration](#configuration) · [Docker](#run-with-docker)
 
 </div>
 
@@ -25,10 +25,10 @@ No build, no dependencies: one `index.html` and one JS config file.
 1. Copy the example file:
 
    ```sh
-   cp services.js.example services.js
+   cp www/services.js.example www/services.js
    ```
 
-2. Edit `services.js` with your services:
+2. Edit `www/services.js` with your services:
 
    ```js
    window.SERVICES = [
@@ -45,16 +45,16 @@ No build, no dependencies: one `index.html` and one JS config file.
    ];
    ```
 
-3. Open `index.html` in your browser, or serve the folder:
+3. Open `www/index.html` in your browser, or serve the folder:
 
    ```sh
-   python3 -m http.server 8000
+   python3 -m http.server 8000 --directory www
    ```
 
 Reload the page after each change to `services.js`.
 
 > [!NOTE]
-> `services.js` is listed in `.gitignore`: your configuration stays local, and only `services.js.example` is in the repository.
+> `services.js` is listed in `.gitignore`: your configuration stays local, and only `www/services.js.example` is in the repository.
 
 ## Configuration
 
@@ -71,30 +71,39 @@ A flat array of services, without sections, still works and is rendered without 
 > [!TIP]
 > You can use [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons) through jsDelivr for the icons.
 
-## Serve it with Docker
+## Run with Docker
 
-To serve the page from a container, mount the folder read-only on a static web server such as nginx:
+The repository includes a `compose.yml` that serves `www/` with the [linuxserver/nginx](https://docs.linuxserver.io/images/docker-nginx/) image:
 
-```yaml
-services:
-  html:
-    image: nginx:alpine
-    container_name: html
-    restart: unless-stopped
-    ports:
-      - 8080:80
-    volumes:
-      - ./:/usr/share/nginx/html:ro
+```sh
+cp .env.example .env   # optional, defaults apply to empty values
+docker compose up -d
 ```
 
-With the volume mounted, you can edit `services.js` directly on the host.
+Then open <http://localhost>. Settings are read from `.env`:
+
+| Variable                  | Default    | Description                 |
+| ------------------------- | ---------- | --------------------------- |
+| `HREFS_NGINX_PUID`        | `1000`     | User ID the container runs as  |
+| `HREFS_NGINX_PGID`        | `1000`     | Group ID the container runs as |
+| `HREFS_NGINX_TZ`          | `Etc/UTC`  | Container timezone          |
+| `HREFS_NGINX_HTTP_PORT`   | `80`       | Host port mapped to HTTP    |
+| `HREFS_NGINX_HTTPS_PORT`  | `443`      | Host port mapped to HTTPS   |
+
+> [!TIP]
+> Empty values in `.env` fall back to the defaults, so you only need to fill in what you want to change.
+
+`www/` is mounted as a volume, so edits to `services.js` on the host show up on reload.
 
 ## Structure
 
 ```text
 .
-├── index.html            # page and rendering logic
-├── services.js           # your configuration (ignored by git)
-├── services.js.example   # template to copy
-└── favicon.svg
+├── compose.yml               # nginx container serving www/
+├── .env.example              # Docker settings template
+└── www/
+    ├── index.html            # page and rendering logic
+    ├── services.js           # your configuration (ignored by git)
+    ├── services.js.example   # template to copy
+    └── favicon.svg
 ```
